@@ -1,0 +1,88 @@
+name: Build and publish NextRole
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nextrole-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Test server, offline storage and sync codes
+        run: |
+          python3 -m unittest tests.py test_experience.py test_sync.py
+          node portable/tests.cjs
+          node portable/sync-tests.cjs
+          for file in web/*.js; do node --check "$file"; done
+      - name: Install Android SDK components
+        run: sdkmanager 'platforms;android-34' 'build-tools;34.0.0'
+      - name: Restore signing identity from repository secrets
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          key=os.environ.get('ANDROID_KEYSTORE_BASE64','')
+          password=os.environ.get('ANDROID_KEYSTORE_PASSWORD','')
+          if not key or not password:
+              raise SystemExit('Configure ANDROID_KEYSTORE_BASE64 and ANDROID_KEYSTORE_PASSWORD in repository Actions secrets')
+          folder=Path('android-client/.signing');folder.mkdir(mode=0o700,exist_ok=True)
+          for name,content in [('qitu-release.p12',base64.b64decode(key,validate=True)),('password.txt',password.encode())]:
+              target=folder/name;target.write_bytes(content);target.chmod(0o600)
+          PY
+      - name: Build and verify signed APK
+        env:
+          NEXTROLE_VERSION_CODE: ${{ github.run_number }}
+        run: |
+          export NEXTROLE_VERSION_CODE=$((100000 + NEXTROLE_VERSION_CODE))
+          python3 android-client/tools/build.py
+      - name: Package clean web and source archives
+        run: |
+          python3 tools/package_release.py --output dist
+          python3 tools/audit_release.py
+      - name: Publish immutable version and mark Latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          version=$(cat VERSION)
+          latest=false
+          head=$(gh api "repos/${GH_REPO}/commits/main" --jq .sha)
+          if [[ "$head" == "$GITHUB_SHA" ]]; then latest=true; fi
+          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
+            tag="$GITHUB_REF_NAME"
+          else
+            tag="v${version}-build.${GITHUB_RUN_NUMBER}"
+          fi
+          printf 'NextRole %s\n\nSource commit: %s\n\nIncludes offline web, signed APK, source archive and SHA-256 checksums. No user data or signing keys are included.\n' "$version" "$GITHUB_SHA" > dist/release-notes.md
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/NextRole-Web.zip dist/NextRole.apk dist/NextRole-Source.zip dist/SHA256SUMS.txt --clobber
+            gh release edit "$tag" --latest="$latest" --notes-file dist/release-notes.md
+          else
+            gh release create "$tag" dist/NextRole-Web.zip dist/NextRole.apk dist/NextRole-Source.zip dist/SHA256SUMS.txt --target "$GITHUB_SHA" --title "NextRole ${version} · build ${GITHUB_RUN_NUMBER}" --notes-file dist/release-notes.md --latest="$latest"
+          fi
+      - name: Remove temporary signing files
+        if: always()
+        run: rm -rf android-client/.signing

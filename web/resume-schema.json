@@ -1,0 +1,605 @@
+[
+  {
+    "key": "basics",
+    "label": "个人基本信息",
+    "required": true,
+    "fields": [
+      {
+        "key": "name",
+        "label": "姓名",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "age",
+        "label": "年龄",
+        "required": true,
+        "type": "number"
+      },
+      {
+        "key": "documentType",
+        "label": "证件类型",
+        "required": true,
+        "type": "select",
+        "options": "documentType"
+      },
+      {
+        "key": "documentNumber",
+        "label": "证件号码",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "email",
+        "label": "电子邮箱",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "key": "gender",
+        "label": "性别",
+        "required": true,
+        "type": "radio",
+        "options": "gender"
+      },
+      {
+        "key": "phone",
+        "label": "移动电话",
+        "required": true,
+        "type": "tel"
+      },
+      {
+        "key": "birthday",
+        "label": "出生日期",
+        "required": true,
+        "type": "date"
+      },
+      {
+        "key": "birthplace",
+        "label": "籍贯",
+        "required": false,
+        "type": "region"
+      },
+      {
+        "key": "ethnicity",
+        "label": "民族",
+        "required": false,
+        "type": "select",
+        "options": "ethnicity"
+      },
+      {
+        "key": "politicalStatus",
+        "label": "政治面貌",
+        "required": false,
+        "type": "select",
+        "options": "politicalStatus"
+      },
+      {
+        "key": "nationality",
+        "label": "国籍/地区",
+        "required": true,
+        "type": "select",
+        "options": "nationality"
+      },
+      {
+        "key": "maritalStatus",
+        "label": "婚姻状况",
+        "required": false,
+        "type": "select",
+        "options": "maritalStatus"
+      },
+      {
+        "key": "household",
+        "label": "户口所在地",
+        "required": false,
+        "type": "region"
+      },
+      {
+        "key": "city",
+        "label": "现居住地",
+        "required": true,
+        "type": "region"
+      },
+      {
+        "key": "firstWorkCity",
+        "label": "意向工作地",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "acceptLocationChange",
+        "label": "接受工作地点变更",
+        "required": true,
+        "type": "radio",
+        "options": "yesNo"
+      },
+      {
+        "key": "workMobility",
+        "label": "愿意接受的工作地点",
+        "required": false,
+        "type": "select",
+        "options": "workMobility"
+      },
+      {
+        "key": "schoolRegion",
+        "label": "最高学历毕业院校所在国家/地区",
+        "required": true,
+        "type": "region"
+      },
+      {
+        "key": "school",
+        "label": "毕业院校",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "graduationDate",
+        "label": "毕业时间",
+        "required": true,
+        "type": "date"
+      },
+      {
+        "key": "education",
+        "label": "学历",
+        "required": true,
+        "type": "select",
+        "options": "education"
+      },
+      {
+        "key": "degree",
+        "label": "学位",
+        "required": true,
+        "type": "select",
+        "options": "degree"
+      },
+      {
+        "key": "major",
+        "label": "专业",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "achievement",
+        "label": "个人成就",
+        "required": false,
+        "type": "textarea"
+      },
+      {
+        "key": "discipline",
+        "label": "一级学科分类",
+        "required": true,
+        "type": "select",
+        "options": "discipline"
+      },
+      {
+        "key": "otherNotes",
+        "label": "其他说明",
+        "required": false,
+        "type": "textarea"
+      },
+      {
+        "key": "photo",
+        "label": "照片",
+        "required": true,
+        "type": "photo"
+      }
+    ]
+  },
+  {
+    "key": "educations",
+    "label": "教育经历",
+    "required": true,
+    "fields": [
+      {
+        "key": "startDate",
+        "label": "开始时间",
+        "required": true,
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "结束时间",
+        "required": true,
+        "type": "date"
+      },
+      {
+        "key": "school",
+        "label": "学校",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "department",
+        "label": "就读院/系",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "major",
+        "label": "专业",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "education",
+        "label": "学历",
+        "required": true,
+        "type": "select",
+        "options": "education"
+      },
+      {
+        "key": "degree",
+        "label": "学位",
+        "required": true,
+        "type": "select",
+        "options": "degree"
+      },
+      {
+        "key": "gpa",
+        "label": "GPA/CGPA",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "supervisor",
+        "label": "导师姓名",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "laboratory",
+        "label": "所在实验室",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "ranking",
+        "label": "学习成绩排名",
+        "required": false,
+        "type": "select",
+        "options": "ranking"
+      },
+      {
+        "key": "studentLeader",
+        "label": "是否为学生干部",
+        "required": false,
+        "type": "select",
+        "options": "yesNo"
+      }
+    ]
+  },
+  {
+    "key": "languages",
+    "label": "语言能力",
+    "required": true,
+    "fields": [
+      {
+        "key": "language",
+        "label": "语种",
+        "required": true,
+        "type": "select",
+        "options": "language"
+      },
+      {
+        "key": "certificate",
+        "label": "证书",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "remark",
+        "label": "备注",
+        "required": false,
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "key": "awards",
+    "label": "获奖经历",
+    "required": true,
+    "fields": [
+      {
+        "key": "awardType",
+        "label": "获奖类型",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "date",
+        "label": "获奖时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "name",
+        "label": "获奖名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "level",
+        "label": "获奖级别/奖学金级别",
+        "required": false,
+        "type": "select",
+        "options": "awardLevel"
+      },
+      {
+        "key": "grade",
+        "label": "获奖等级",
+        "required": false,
+        "type": "select",
+        "options": "awardGrade"
+      },
+      {
+        "key": "description",
+        "label": "获奖情况",
+        "required": false,
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "key": "experiences",
+    "label": "工作经历",
+    "required": false,
+    "fields": [
+      {
+        "key": "company",
+        "label": "企业名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "startDate",
+        "label": "开始时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "结束时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "department",
+        "label": "所在部门",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "position",
+        "label": "职位名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "description",
+        "label": "工作描述",
+        "required": false,
+        "type": "textarea"
+      }
+    ]
+  },
+  {
+    "key": "projects",
+    "label": "项目经验",
+    "required": false,
+    "fields": [
+      {
+        "key": "projectName",
+        "label": "项目名称",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "startDate",
+        "label": "开始时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "结束时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "position",
+        "label": "项目职务",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "location",
+        "label": "项目地点",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "responsibilities",
+        "label": "项目职责",
+        "required": false,
+        "type": "textarea"
+      },
+      {
+        "key": "description",
+        "label": "项目描述",
+        "required": false,
+        "type": "textarea"
+      }
+    ]
+  },
+  {
+    "key": "skills",
+    "label": "专业技能",
+    "required": false,
+    "fields": [
+      {
+        "key": "name",
+        "label": "技能名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "level",
+        "label": "技能水平",
+        "required": false,
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "key": "papers",
+    "label": "论文著作",
+    "required": false,
+    "fields": [
+      {
+        "key": "name",
+        "label": "论文名称",
+        "required": true,
+        "type": "text"
+      },
+      {
+        "key": "publicationDate",
+        "label": "论文发表时间",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "details",
+        "label": "论文详情",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "journal",
+        "label": "发表期刊",
+        "required": false,
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "key": "patents",
+    "label": "个人专利",
+    "required": false,
+    "fields": [
+      {
+        "key": "number",
+        "label": "专利编号",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "name",
+        "label": "专利名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "publicationDate",
+        "label": "发布时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "value",
+        "label": "专业价值",
+        "required": false,
+        "type": "textarea"
+      }
+    ]
+  },
+  {
+    "key": "certificates",
+    "label": "专业资格认证",
+    "required": false,
+    "fields": [
+      {
+        "key": "name",
+        "label": "专业资格名称",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "startDate",
+        "label": "专业资格有效开始时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "专业资格有效结束时间",
+        "required": false,
+        "type": "date"
+      }
+    ]
+  },
+  {
+    "key": "trainings",
+    "label": "培训经历",
+    "required": false,
+    "fields": [
+      {
+        "key": "startDate",
+        "label": "开始时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "结束时间",
+        "required": false,
+        "type": "date"
+      },
+      {
+        "key": "course",
+        "label": "培训课程",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "institution",
+        "label": "培训机构",
+        "required": false,
+        "type": "text"
+      },
+      {
+        "key": "location",
+        "label": "培训地点",
+        "required": false,
+        "type": "select",
+        "options": "trainingLocation"
+      },
+      {
+        "key": "certificate",
+        "label": "获得证书",
+        "required": false,
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "key": "computers",
+    "label": "计算机能力",
+    "required": true,
+    "fields": [
+      {
+        "key": "language",
+        "label": "编程语言",
+        "required": true,
+        "type": "select",
+        "options": "programming"
+      },
+      {
+        "key": "proficiency",
+        "label": "掌握程度",
+        "required": false,
+        "type": "select",
+        "options": "proficiency"
+      }
+    ]
+  }
+]

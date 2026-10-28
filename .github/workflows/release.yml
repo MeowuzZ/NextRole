@@ -35,7 +35,14 @@ jobs:
           node portable/sync-tests.cjs
           for file in web/*.js; do node --check "$file"; done
       - name: Install Android SDK components
-        run: sdkmanager 'platforms;android-34' 'build-tools;34.0.0'
+        run: |
+          sdk="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          if [[ ! -f "$sdk/platforms/android-34/android.jar" || ! -x "$sdk/build-tools/34.0.0/aapt2" ]]; then
+            manager=$(find "$sdk/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)
+            if [[ -z "$manager" ]]; then echo 'Android command-line tools are missing'; exit 1; fi
+            "$manager" --sdk_root="$sdk" 'platforms;android-34' 'build-tools;34.0.0'
+          fi
+          printf 'ANDROID_SDK_ROOT=%s\n' "$sdk" >> "$GITHUB_ENV"
       - name: Restore signing identity from repository secrets
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
